@@ -1,0 +1,12 @@
+pillow>=9.0.0
+numpy>=1.20.0
+tqdm>=4.60.0
+pypdfium2>=4.0.0
+torch>=1.10.0
+
+# Recommended for UVDoc model (but not required)
+# torch>=1.10.0
+# opencv-python>=4.5.0
+
+# Optional dependencies
+# opencv-python-headless>=4.5.0 

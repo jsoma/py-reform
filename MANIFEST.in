@@ -1,0 +1,6 @@
+include LICENSE
+include README.md
+include requirements.txt
+recursive-include py_reform/models/weights *.pkl
+recursive-include examples *.py *.jpg *.pdf
+recursive-include tests *.py 
