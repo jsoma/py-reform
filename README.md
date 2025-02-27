@@ -1,6 +1,6 @@
 # py-reform: PDF & Image Dewarping Library
 
-A Python library for dewarping/straightening document images and PDFs.
+A Python library for dewarping/straightening/reformatting document images and PDFs.
 
 ![An example](examples/comparison.jpg)
 

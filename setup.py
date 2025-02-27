@@ -12,7 +12,7 @@ setup(
     version="0.1.0",
     author="Jonathan Soma",
     author_email="jonathan.soma@gmail.com",
-    description="A Python library for dewarping/straightening document images and PDFs",
+    description="A Python library for dewarping/straightening/reformatting document images and PDFs",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/jsoma/py-reform",
@@ -33,11 +33,9 @@ setup(
         "numpy>=1.20.0",
         "tqdm>=4.60.0",
         "pypdfium2>=4.0.0",
+        "torch>=1.10.0",
     ],
     extras_require={
-        "full": [
-            "torch>=1.10.0",
-        ],
         "dev": [
             "pytest>=7.0.0",
             "black>=22.0.0",
