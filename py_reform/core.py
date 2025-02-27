@@ -11,6 +11,7 @@ from tqdm import tqdm
 
 from py_reform.models import get_model
 from py_reform.utils.pdf import pdf_to_images
+from py_reform.utils.image import auto_rotate_image, open_image
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +42,8 @@ def straighten(
     # Handle different input types
     if isinstance(source, PIL.Image.Image):
         # Process a single PIL image
+        # Auto-rotate the image if it has orientation data
+        source = auto_rotate_image(source)
         try:
             return dewarping_model.process(source)
         except Exception as e:
@@ -64,6 +67,8 @@ def straighten(
         # Process each image
         processed_images = []
         for img in tqdm(images, desc="Processing pages"):
+            # Auto-rotate the image if it has orientation data
+            img = auto_rotate_image(img)
             try:
                 processed = dewarping_model.process(img)
                 processed_images.append(processed)
@@ -76,10 +81,19 @@ def straighten(
 
     # Process a single image file
     try:
-        img = PIL.Image.open(source_path)
+        # Use our utility function to open and auto-rotate the image
+        img = open_image(source_path)
         return dewarping_model.process(img)
     except Exception as e:
-        result = _handle_error(e, PIL.Image.open(source_path), errors)
+        # If there's an error, try to open the image again for error handling
+        # This ensures we have a valid image for error handling
+        try:
+            original_img = open_image(source_path)
+        except:
+            # If we can't open it with our function, fall back to regular open
+            original_img = PIL.Image.open(source_path)
+            
+        result = _handle_error(e, original_img, errors)
         if result is None:
             # If ignore mode returns None, we need to return an empty list to match the return type
             return []

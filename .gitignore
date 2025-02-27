@@ -1,4 +1,5 @@
 # outputs
+examples/output/
 examples/output/*.jpg
 examples/output/*.pdf
 examples/output/*.png

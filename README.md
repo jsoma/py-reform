@@ -12,6 +12,8 @@ A Python library for dewarping/straightening/reformatting document images and PD
 - Save results as images or PDFs
 - Progress tracking with tqdm
 - Flexible error handling
+- Automatic EXIF orientation handling
+- Multiple dewarping models
 
 ## Installation
 
@@ -50,6 +52,21 @@ save_pdf(straight_pages, "straight_document.pdf")
 straight_pages = straighten("document.pdf", pages=[0, 2, 5])
 ```
 
+### Choose a Different Dewarping Model
+
+By default we use [UVDoc](https://github.com/tanguymagne/UVDoc), which works for all sorts of problematic images. If you just need to rotate the image, though, use [deskew](https://github.com/sbrunner/deskew) instead.
+
+```python
+# Use the rotation-based deskew model
+straight_image = straighten("document.jpg", model="deskew")
+
+# Use the UVDoc model with custom parameters
+straight_image = straighten("document.jpg", model="uvdoc", device="cpu")
+
+# Configure deskew model parameters
+straight_image = straighten("document.jpg", model="deskew", max_angle=15.0, num_peaks=30)
+```
+
 ### Create Before/After Comparisons
 
 ```python
@@ -58,26 +75,45 @@ from py_reform.utils import create_comparison
 straight_image = straighten("curved_page.jpg")
 
 # Create a side-by-side comparison
-comparison = create_comparison(
-    before="curved_page.jpg",
-    after=straight_image,
-    spacing=10  # Add 10px spacing between images
-)
+comparison = create_comparison(["curved_page.jpg", straight_image])
 comparison.save("comparison.jpg")
 ```
 
 ### Error Handling
 
 ```python
-# Different error handling options
-result = straighten("document.pdf", errors="raise")  # Default: stop on error
-result = straighten("document.pdf", errors="ignore") # Skip errors, log warning
-result = straighten("document.pdf", errors="warn")   # Use original on error with warning
+# Default: stop on error
+result = straighten("document.pdf", errors="raise") 
+# Skip errors, log warning
+result = straighten("document.pdf", errors="ignore")
+# Use original on error with warning
+result = straighten("document.pdf", errors="warn")   
 ```
 
-## TODO
+### Working with Image Orientation
 
-- Alternative dewarping algorithms/models
+The library automatically handles EXIF orientation data in JPEG files, ensuring that images are correctly oriented before processing. You can also use these utilities directly:
+
+```python
+from py_reform.utils import open_image, auto_rotate_image
+import PIL.Image
+
+# Open an image with automatic orientation correction
+img = open_image("photo.jpg")
+
+# Or correct orientation of an already opened image
+img = PIL.Image.open("photo.jpg")
+img = auto_rotate_image(img)
+```
+
+## Available Models
+
+- [UVDoc](https://github.com/tanguymagne/UVDoc/)
+- [deskew](https://github.com/sbrunner/deskew)
+
+## Examples
+
+See [examples/examples.py](examples/examples.py)
 
 ## Citation
 

@@ -6,10 +6,12 @@ from typing import Any, Dict
 
 from py_reform.models.base import DewarpingModel
 from py_reform.models.uvdoc_model import UVDocModel
+from py_reform.models.deskew_model import DeskewModel
 
 # Registry of available models
 MODEL_REGISTRY = {
     "uvdoc": UVDocModel,
+    "deskew": DeskewModel,
     # Add more models here as they are implemented
     # "deep-learning": DeepLearningModel,
     # "opencv-contour": OpenCVContourModel,

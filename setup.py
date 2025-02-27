@@ -9,7 +9,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="py-reform",
-    version="0.1.0",
+    version="0.1.3",
     author="Jonathan Soma",
     author_email="jonathan.soma@gmail.com",
     description="A Python library for dewarping/straightening/reformatting document images and PDFs",
@@ -29,11 +29,12 @@ setup(
     ],
     python_requires=">=3.8",
     install_requires=[
-        "pillow>=9.0.0",
-        "numpy>=1.20.0",
-        "tqdm>=4.60.0",
-        "pypdfium2>=4.0.0",
-        "torch>=1.10.0",
+        "pillow>=9.0.0,<12.0.0",
+        "numpy>=1.20.0,<2.0.0",
+        "tqdm>=4.60.0,<5.0.0",
+        "pypdfium2>=4.0.0,<5.0.0",
+        "torch>=1.10.0,<3.0.0",
+        "deskew>=1.0.0",
     ],
     extras_require={
         "dev": [
